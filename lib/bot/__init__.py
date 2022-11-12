@@ -127,4 +127,6 @@ class Bot(BotBase):
             await self.process_commands(message)
 
 
+print(' IS IT HERE!?')
+
 bot = Bot()
