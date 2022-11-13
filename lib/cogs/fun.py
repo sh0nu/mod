@@ -1,10 +1,10 @@
 from discord.ext.commands import Cog
-from discord.ext.commands import command
+from discord.ext.commands import command, cooldown
 from random import choice, randint
-from discord import Member
+from discord import Member, Embed
 from typing import Optional
 from discord.errors import HTTPException
-from discord.ext.commands import BadArgument
+from discord.ext.commands import BadArgument, BucketType
 from aiohttp import request
 
 
@@ -17,6 +17,7 @@ class Fun(Cog):
         await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya'))} {ctx.author.mention}!")
 
     @command(name='dice', aliases=['roll'])
+    @cooldown(1, 30, BucketType.user)
     async def roll_dice(self, ctx, die_string: str):
         dice, value = (int(term) for term in die_string.split("d"))
         if dice <= 25:
@@ -37,6 +38,7 @@ class Fun(Cog):
             await ctx.send('Can not find that member. Stop dreaming about fake friends.')
 
     @command(name='echo', aliases=['say'])
+    @cooldown(1, 15, BucketType.guild)
     async def echo_message(self, ctx, *, message):
         await ctx.message.delete()
         await ctx.send(message)

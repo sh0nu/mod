@@ -7,7 +7,7 @@ from apscheduler.triggers.cron import CronTrigger
 from discord import Embed, Intents
 from discord.ext.commands import Bot as BotBase
 from discord.ext.commands import (
-    CommandNotFound, BadArgument, MissingRequiredArgument)
+    CommandNotFound, BadArgument, MissingRequiredArgument, CommandOnCooldown)
 from asyncio import sleep
 from ..db import db
 from discord import HTTPException, Forbidden
@@ -94,11 +94,15 @@ class Bot(BotBase):
         elif isinstance(exc, MissingRequiredArgument):
             await ctx.send("You have to give me more info than that")
 
-        elif isinstance(exc.original, HTTPException):
-            await ctx.send('Unable to send message')
+        # elif isinstance(exc.original, HTTPException):
+            # await ctx.send('Unable to send message')
 
-        elif isinstance(exc.original, Forbidden):
-            await ctx.send("I do not have permission to do that")
+        elif isinstance(exc, CommandOnCooldown):
+            await ctx.send(f'that command is on cooldown. Try again in {exc.retry_after:,.2f} seconds')
+
+        elif hasattr(exc, 'original'):
+            if isinstance(exc.original, Forbidden):
+                await ctx.send("I do not have permission to do that")
 
         else:
             raise exc.original
