@@ -12,7 +12,7 @@ from asyncio import sleep
 from ..db import db
 from discord import HTTPException, Forbidden
 
-PREFIX = '+'
+PREFIX = '.'
 OWNER_IDS = [1038119543127683103]
 COGS = [path.split("\\")[-1][:-3] for path in glob("./lib/cogs/*.py")]
 IGNORE_EXCEPTIONS = (CommandNotFound, BadArgument)
