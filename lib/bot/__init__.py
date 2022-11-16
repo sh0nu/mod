@@ -83,7 +83,7 @@ class Bot(BotBase):
             await args[0].send("Something went wrong, I am sorry that ShOnU is stupid")
         else:
             channel = self.get_channel(896878848807960646)
-            await self.stdout.send(' an error occured')
+            # await self.stdout.send(' an error occured')
 
         raise
 
@@ -117,7 +117,7 @@ class Bot(BotBase):
             self.ready = True
             print(' bot ready')
 
-            await self.stdout.send(' Now online!')
+            # await self.stdout.send(' Now online!')
 
             # embed = Embed(title="now online!",
             #              description="shonu_but_smarter is now online", colour=0xFF0000, timestamp=datetime.utcnow())
